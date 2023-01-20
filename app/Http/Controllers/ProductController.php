@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function latest(): JsonResponse
     {
-        $products = Product::with('category')->latest()->take(8)->get();
+        $products = Product::with('category')->latest()->take(8)->get()->makeHidden('description');
         return successResponse([
             'products' => $products
         ]);
@@ -30,7 +30,7 @@ class ProductController extends Controller
 
     public function most_popular(): JsonResponse
     {
-        $products = Product::with('category')->orderByDesc('price')->take(8)->get();
+        $products = Product::with('category')->orderByDesc('price')->take(8)->get()->makeHidden('description');
         return successResponse([
             'products' => $products
         ]);
@@ -38,7 +38,7 @@ class ProductController extends Controller
 
     public function best_seller(): JsonResponse
     {
-        $products = Product::with('category')->orderBy('price','asc')->take(8)->get();
+        $products = Product::with('category')->orderBy('price','asc')->take(8)->get()->makeHidden('description');
         return successResponse([
             'products' => $products
         ]);
@@ -46,7 +46,7 @@ class ProductController extends Controller
 
     public function related_products($category)
     {
-        $products = Product::query()->where('category_id',$category)->get();
+        $products = Product::query()->where('category_id',$category)->get()->makeHidden('description');
         return successResponse([
            'products' => $products->load('category')
         ]);
@@ -56,7 +56,7 @@ class ProductController extends Controller
      */
     public function index(): JsonResponse
     {
-        $products = Product::with('category')->orderByDesc('id')->get();
+        $products = Product::with('category')->orderByDesc('id')->get()->makeHidden('description');
         return successResponse([
             'products' => $products
         ]);

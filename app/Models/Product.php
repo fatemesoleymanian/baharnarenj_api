@@ -36,6 +36,6 @@ class Product extends Model
      */
     public function getImageAttribute($value): string
     {
-        return Storage::url($value);
+        return Storage::url('app/public/'.$value);
     }
 }

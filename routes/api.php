@@ -13,6 +13,7 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,6 +71,9 @@ Route::middleware('auth:sanctum')->prefix('/cart')->group(function () {
 
 # Category
 Route::middleware('auth:sanctum')->prefix('/category')->group(function () {
+        Route::put('/{category}', [CategoryController::class, 'update']);
+    Route::post('/', [CategoryController::class, 'store']);
+
     Route::resource('/', CategoryController::class);
     Route::put('/{category}', [CategoryController::class, 'update']);
     Route::delete('/{category}', [CategoryController::class, 'destroy']);
@@ -124,6 +128,11 @@ Route::prefix('/post')->group(function () {
 
 });
 
+
+Route::get('/link', function () {
+    Artisan::call('storage:link');
+});
+
 Route::post('/upload',function (\Illuminate\Http\Request $request){
     return $request->image = handleFile($request->location, $request->image);
 
@@ -132,7 +141,8 @@ Route::post('/upload',function (\Illuminate\Http\Request $request){
 Route::post('/remove_upload',function (\Illuminate\Http\Request $request){
     $path = parse_url($request->imageName);
 
-    $remove = \Illuminate\Support\Facades\File::delete(public_path($path['path']));
+    // $remove = \Illuminate\Support\Facades\File::delete($path['path']);
+    $remove = \Illuminate\Support\Facades\Storage::delete($path['path']);
     if ($remove) return response()->json([
         'success' => 1,
         'msg' => 'فایل با موفقیت حذف گردید.'

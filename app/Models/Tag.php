@@ -17,7 +17,7 @@ class Tag extends Model
      */
     public function post(): BelongsTo
     {
-        return $this->belongsTo(Post::class, 'post_id');
+        return $this->belongsTo(Post::class, 'post_id')->select(['id','slug','title']);
     }
     public function getCreatedAtAttribute($val)
     {

@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('only-admin')->only(['index', 'destroy']);
-//    }
+    // public function __construct()
+    // {
+    //     $this->middleware('only-admin')->only(['index', 'destroy']);
+    // }
 
     /**
      * @return JsonResponse

@@ -125,7 +125,7 @@ class PostController extends Controller
      */
     public function allForAdmin(): JsonResponse
     {
-        $posts = Post::with(['tags', 'admin'])->get();
+        $posts = Post::with(['tags', 'admin'])->get()->makeHidden('text');
         return successResponse([
             'posts' => $posts
         ]);
